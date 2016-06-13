@@ -1,9 +1,13 @@
-# Further Notes
+# Stranger in a Strange Land: PostgreSQL for MySQL users
 
+Given at The Perl Conference 2016 - Orland, Florida
 
-## Why?
+* Markdown slides are in `present.mkd`
+* Clone repository, open `slides.html` in browser to view presentation
 
-### JSON data types
+## Further Notes
+
+### Why: JSON data types
 
 One hot topic now is using PostgreSQL as a "NoSQL" document database,
 instead of MongoDB, CouchDB, etc., by using the relatively new jsonb
@@ -14,7 +18,7 @@ datatype, which is indexable, has native operators, etc.
 * https://www.airpair.com/postgresql/posts/sql-vs-nosql-ko-postgres-vs-mongo
 * https://www.vividcortex.com/blog/2015/06/02/json-support-postgres-mysql-mongodb-sql-server/
 
-### PL/Perl
+### Why: PL/Perl
 
 Write Pg functions in Perl
 
@@ -22,14 +26,14 @@ http://www.postgresql.org/docs/9.5/interactive/plperl.html
 
 But, you can't test code here, to my limited knowledge.
 
-### DBD::Pg
+### Why: DBD::Pg
 
 Unique to Postgres:
 
 * Asynchronous queries
 * COPY
 
-### Comparisons with MySQL
+### Why: Comparisons with MySQL
 
 * https://serversforhackers.com/using-postgresql
 * http://ledgersmbdev.blogspot.co.uk/2012/09/or-modelling-interlude-postgresql-vs.html
