@@ -1,0 +1,210 @@
+## Stranger in a Strange Land:
+
+# PostgreSQL for MySQL users
+
+---
+
+# n00b
+
+Note: 7 years since last usage - basic then. Coworkers love it, better figure out why.
+
+---
+
+### Why use PostgreSQL vs MySQL
+### Converting your database
+### Tools & tips
+
+---
+
+# "Post-Gres-Que-Ell"
+
+# or just "Postgres"
+
+---
+
+# Why?
+
+---
+
+## Why?
+
+### Not controlled by any company
+
+* .com *vs* .org
+* Product *vs* Project
+
+Note: Oracle
+
+---
+
+## Why?
+
+### Awesome documentation
+
+* Versioned
+* MySQL/MariaDB/Percona docs?
+* Older MySQL docs?
+
+Note: mariadb docs are on .com, and aren't versioned. Mysql docs for older versions redirect (suddenly) to 5.7
+
+---
+
+## Why?
+
+### Transactional DDL
+
+* Data Definition Language
+* CREATE/ALTER/DROP/etc
+* MySQL can't do it
+
+```sql
+BEGIN;
+CREATE TABLE ...;
+ROLLBACK;
+```
+
+* `psql` default is to automatically commit (issue `BEGIN;` before
+  making your changes)
+
+Note: All changes can be tested (and rolled back) before actually
+      applying. Mysql uses transactions from pluggable table system
+      (InnoDB), not core.
+
+---
+
+## Why? 
+
+### Data integrity
+
+* type checking
+* mindsets:
+  * MySQL: *app* does checks (db flexible)
+  * Postgres: *database* does checks (db strict)
+* but, MySQL strict mode
+* February 30
+* strictness a disadvantage?
+
+Note: Mysql strict mode can be turned off. Default config in recent
+      versions (it broke our app, so we turned it off). Feb 30 is
+      never a valid date.
+
+---
+
+## Why?
+
+### Real tab completion
+
+* `select * from demo where [TAB]`
+    * pg: `first_name id last_name`
+    * my: `Display all 755 possibilities?`
+
+Note: I tried all the Mysql auto-rehash settings, nada.
+
+---
+
+## Why?
+
+### Others
+
+* Fulltext w/o MyISAM, MySQL 5.6, or Solr/ElasticSearch
+* JSON data types
+    * can be indexed (WHERE on object keys)
+    * similar functionality in MySQL 5.7 (not MariaDB yet?)
+* PL/Perl
+* MySQL gotchas: http://sql-info.de/mysql/gotchas.html
+
+Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
+      (latest stable). Write Pg functions in Perl
+
+---
+
+## Why?
+
+### Interesting
+
+* 84% of surveyed Rails developers (1,417) prefer Postgres http://rails-hosting.com/2016/#q42
+* This has increased dramatically over the years of the survey
+
+---
+
+# Converting
+
+---
+
+## Converting
+
+1. Convert schema
+    * datatypes a bit different
+        - e.g. tinyint vs int
+    * AUTO_INCREMENT
+2. Convert data
+3. Convert application
+
+---
+
+## Converting
+
+* Maybe:
+    - https://github.com/AnatolyUss/FromMySqlToPostgreSql
+    - http://ora2pg.darold.net/ 
+    - Also see Postgres Wiki
+* http://blog.endpoint.com/2014/11/mysql-to-postgresql-migration-tips.html
+
+---
+
+# Tools & Tips
+
+---
+
+## Tools & Tips
+
+* Installing
+    - easy to find installation guides ([DDG](https://duckduckgo.com/?q=install+posgresql) "install postgresql")
+* Create a Postgres user with the same name as your Linux
+  username, and access the db shell without having to specify a
+  user to login.
+
+---
+
+## Tools & Tips
+
+* `psql -d <db_name>` (access db shell) 
+* `\<command>` (similar to Vim's "Leader")
+    - `\?` (show meta-commands)
+    - `\q` or `CTRL+d` (quit)
+    - `\h` (help)
+    - `\r` (bails on any command)
+    - `\d` (shows all tables, sequences, indexes)
+    - `\dt` (shows tables)
+    - `\d <table>` (describes)
+    - `\l` (list databases)
+    - `\c` (connect to different database)
+
+---
+
+## Tools & Tips
+
+* `\x` turns on extended display (akin to MySQL's `\G` query terminator)
+    - `<sql here> \x\g\x` (turn on, run query, turn off)
+    - put in .psqlrc: `\set G '\\x\\g\\x'` (to use: `<sql here> :G` -- not `\G` but close)
+* history file: `~/.psql_history`
+
+--- 
+
+# Get help
+
+### [endpoint.com/services/postgresql](https://www.endpoint.com/services/postgresql)
+
+Authors of Bucardo replication
+
+Note: these are the experts, not me
+
+---
+
+# Thank You
+
+## Slides, notes: https://github.com/jdigory/talk-postgres-for-mysql-users
+
+## Josh Lavin
+
+### [twitter.com/jdigory](https://twitter.com/jdigory), IRC: digory

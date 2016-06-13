@@ -1,0 +1,37 @@
+# Further Notes
+
+
+## Why?
+
+### JSON data types
+
+One hot topic now is using PostgreSQL as a "NoSQL" document database,
+instead of MongoDB, CouchDB, etc., by using the relatively new jsonb
+datatype, which is indexable, has native operators, etc.
+
+* http://www.postgresql.org/docs/9.5/interactive/datatype-json.html
+* http://www.enterprisedb.com/postgres-plus-edb-blog/marc-linster/postgres-outperforms-mongodb-and-ushers-new-developer-reality
+* https://www.airpair.com/postgresql/posts/sql-vs-nosql-ko-postgres-vs-mongo
+* https://www.vividcortex.com/blog/2015/06/02/json-support-postgres-mysql-mongodb-sql-server/
+
+### PL/Perl
+
+Write Pg functions in Perl
+
+http://www.postgresql.org/docs/9.5/interactive/plperl.html
+
+But, you can't test code here, to my limited knowledge.
+
+### DBD::Pg
+
+Unique to Postgres:
+
+* Asynchronous queries
+* COPY
+
+### Comparisons with MySQL
+
+* https://serversforhackers.com/using-postgresql
+* http://ledgersmbdev.blogspot.co.uk/2012/09/or-modelling-interlude-postgresql-vs.html
+* https://www.wikivs.com/wiki/MySQL_vs_PostgreSQL
+* https://www.vividcortex.com/blog/2014/04/30/why-mysql/ (see "Why Not a Fork?")
