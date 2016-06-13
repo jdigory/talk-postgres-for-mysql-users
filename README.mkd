@@ -2,7 +2,7 @@
 
 Given at The Perl Conference 2016 - Orlando, Florida
 
-* Markdown slides are in [blob/master/present.mkd](present.mkd)
+* Markdown slides are in [present.mkd](blob/master/present.mkd)
 * Clone repository, open `slides.html` in browser to view presentation
 
 ## Further Notes
