@@ -5,7 +5,7 @@ Given at The Perl Conference 2016 - Orlando, Florida
 * Visible on the web at: https://jlavin.endpoint.com/talks/postgres-for-mysql-users/
 * Markdown slides are in [present.mkd](present.mkd)
 * Clone repository, open `index.html` in browser to view presentation
-    * Or install [App::Revealup](https://metacpan.org/pod/App::revealup), then run `./serve`
+    * Or install [App::revealup](https://metacpan.org/pod/App::revealup), then run `./serve`
 
 ## Further Notes
 
