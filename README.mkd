@@ -7,6 +7,13 @@ Given at The Perl Conference 2016 - Orlando, Florida
 
 ## Further Notes
 
+### History: MyISAM
+
+Lots of problems:
+
+* https://www.percona.com/blog/2006/06/17/using-myisam-in-production/
+* https://stackoverflow.com/questions/20148/myisam-versus-innodb
+
 ### Why: JSON data types
 
 One hot topic now is using PostgreSQL as a "NoSQL" document database,
@@ -41,3 +48,19 @@ Unique to Postgres:
 * http://ledgersmbdev.blogspot.co.uk/2012/09/or-modelling-interlude-postgresql-vs.html
 * https://www.wikivs.com/wiki/MySQL_vs_PostgreSQL
 * https://www.vividcortex.com/blog/2014/04/30/why-mysql/ (see "Why Not a Fork?")
+
+### Why: Partial Indexes
+
+* https://www.postgresql.org/docs/current/static/indexes-partial.html
+* http://blog.heapanalytics.com/speeding-up-postgresql-queries-with-partial-indexes/
+
+### Why: Window Functions
+
+* https://robots.thoughtbot.com/postgres-window-functions
+
+### Tools: Command-line experience
+
+* for easy extended display:
+    * put in .psqlrc: `\set G '\\x\\g\\x'`
+    * to use: `<sql here> :G` -- not `\G` but close
+* https://robots.thoughtbot.com/improving-the-command-line-postgres-experience
