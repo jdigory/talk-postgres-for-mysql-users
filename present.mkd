@@ -4,9 +4,43 @@
 
 ---
 
-# n00b
+<!-- .slide: data-background="dist/images/End_point_light_on_dark.svg" data-background-size="90%" -->
 
-Note: 7 years since last usage - basic then. Coworkers love it, better figure out why.
+Note: Josh Lavin. End Point Corp - web consultancy. 7 years since last
+      usage - basic then. Coworkers love it, better figure out why.
+
+---
+
+# History
+
+Note: know thy history
+
+---
+
+## History
+
+### Originally
+
+* MySQL: speed, not [ACID](https://en.wikipedia.org/wiki/ACID)-compliant
+    * MyISAM was fast, but lots of problems
+    * InnoDB only default since 5.5 (2010)
+        * but, legacy tables
+
+* Postgres: ACID-compliant, solid
+
+Note: ACID - Atomicity, Consistency, Isolation, Durability. A =
+      transactions (indivisible). MyISAM = storage engine; had to
+      lock tables.
+
+---
+
+## History
+
+### Today
+
+They are very similar &mdash; but Postgres has some nice things.
+
+Note: Postgres is faster, MySQL has gained many features over time.
 
 ---
 
@@ -19,6 +53,8 @@ Note: 7 years since last usage - basic then. Coworkers love it, better figure ou
 # "Post-Gres-Que-Ell"
 
 # or just "Postgres"
+
+Note: how to pronounce.
 
 ---
 
@@ -33,7 +69,7 @@ Note: 7 years since last usage - basic then. Coworkers love it, better figure ou
 * .com *vs* .org
 * Product *vs* Project
 
-Note: Oracle
+Note: Oracle owns MySQL; distrust.
 
 ---
 
@@ -42,8 +78,8 @@ Note: Oracle
 ### Awesome documentation
 
 * Versioned
-* MySQL/MariaDB/Percona docs?
 * Older MySQL docs?
+* MySQL/MariaDB/Percona docs?
 
 Note: mariadb docs are on .com, and aren't versioned. Mysql docs for older versions redirect (suddenly) to 5.7
 
@@ -63,8 +99,8 @@ CREATE TABLE ...;
 ROLLBACK;
 ```
 
-* `psql` default is to automatically commit (issue `BEGIN;` before
-  making your changes)
+* `psql` default is to automatically commit
+    * issue `BEGIN;` before making your changes
 
 Note: All changes can be tested (and rolled back) before actually
       applying. Mysql uses transactions from pluggable table system
@@ -77,16 +113,17 @@ Note: All changes can be tested (and rolled back) before actually
 ### Data integrity
 
 * type checking
+* February 30
 * mindsets:
   * MySQL: *app* does checks (db flexible)
   * Postgres: *database* does checks (db strict)
 * but, MySQL strict mode
-* February 30
+    * but, it can be disabled
 * strictness a disadvantage?
 
-Note: Mysql strict mode can be turned off. Default config in recent
-      versions (it broke our app, so we turned it off). Feb 30 is
-      never a valid date.
+Note: Feb 30 is never a valid date. Mysql strict mode can be turned
+      off. Default config in recent versions (it broke our app, so we
+      turned it off).
 
 ---
 
@@ -94,11 +131,32 @@ Note: Mysql strict mode can be turned off. Default config in recent
 
 ### Real tab completion
 
-* `select * from demo where [TAB]`
-    * pg: `first_name id last_name`
-    * my: `Display all 755 possibilities?`
+`select * from demo where [TAB]`
+
+* postgres shows columns:
+    - `first_name id last_name`
+
+* mysql:
+    - `Display all 755 possibilities?`
 
 Note: I tried all the Mysql auto-rehash settings, nada.
+
+---
+
+## Why?
+
+### Types
+
+* Boolean types - [`boolean`](https://www.postgresql.org/docs/current/static/datatype-boolean.html)
+    * MySQL is just `TINYINT(1)`, 0=false, !0=true
+
+* JSON data types - [`json`, `jsonb`](https://www.postgresql.org/docs/current/static/datatype-json.html)
+    * can be indexed (WHERE on object keys)
+    * similar functionality in MySQL 5.7
+        * not MariaDB yet
+
+Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
+      (latest stable) -- aside: versioning MariaDB vs MySQL...
 
 ---
 
@@ -107,14 +165,13 @@ Note: I tried all the Mysql auto-rehash settings, nada.
 ### Others
 
 * Fulltext w/o MyISAM, MySQL 5.6, or Solr/ElasticSearch
-* JSON data types
-    * can be indexed (WHERE on object keys)
-    * similar functionality in MySQL 5.7 (not MariaDB yet?)
+* Partial indexes
+    * `CREATE INDEX ... WHERE ...`
 * PL/Perl
-* MySQL gotchas: http://sql-info.de/mysql/gotchas.html
+* MySQL gotchas: [sql-info.de/mysql/gotchas.html](http://sql-info.de/mysql/gotchas.html)
 
-Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
-      (latest stable). Write Pg functions in Perl
+Note: Partial indexes, say for all rows where deleted != 1. PL/Perl
+      allows you to write Postgres functions in Perl. Broad topic.
 
 ---
 
@@ -122,8 +179,12 @@ Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
 
 ### Interesting
 
-* 84% of surveyed Rails developers (1,417) prefer Postgres http://rails-hosting.com/2016/#q42
-* This has increased dramatically over the years of the survey
+* 84% of Rails developers prefer Postgres
+    * 1,417 developers surveyed
+    * [rails-hosting.com/2016/#q42](http://rails-hosting.com/2016/#q42)
+* Increased dramatically over the years of the survey
+
+Note: FWIW.
 
 ---
 
@@ -134,21 +195,26 @@ Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
 ## Converting
 
 1. Convert schema
+    * `mysqldump --compatible=postgresql --no-data`
     * datatypes a bit different
         - e.g. tinyint vs int
-    * AUTO_INCREMENT
+    * AUTO_INCREMENT vs SEQUENCE
 2. Convert data
+    * scripts
 3. Convert application
+
+Note: mysqldump is a starting place. Scripts are very useful to massage
+      data, and be able to re-run the conversion.
 
 ---
 
 ## Converting
 
+* [blog.endpoint.com/2014/11/mysql-to-postgresql-migration-tips.html](http://blog.endpoint.com/2014/11/mysql-to-postgresql-migration-tips.html)
 * Maybe:
-    - https://github.com/AnatolyUss/FromMySqlToPostgreSql
-    - http://ora2pg.darold.net/ 
-    - Also see Postgres Wiki
-* http://blog.endpoint.com/2014/11/mysql-to-postgresql-migration-tips.html
+    - [github.com/AnatolyUss/FromMySqlToPostgreSql](https://github.com/AnatolyUss/FromMySqlToPostgreSql)
+    - [ora2pg.darold.net](http://ora2pg.darold.net/)
+    - Also see [Postgres Wiki](https://wiki.postgresql.org/wiki/Converting_from_other_Databases_to_PostgreSQL)
 
 ---
 
@@ -158,53 +224,67 @@ Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
 
 ## Tools & Tips
 
-* Installing
-    - easy to find installation guides ([DDG](https://duckduckgo.com/?q=install+posgresql) "install postgresql")
-* Create a Postgres user with the same name as your Linux
-  username, and access the db shell without having to specify a
-  user to login.
+### Installing
+
+* easy to find guides ([DDG](https://duckduckgo.com/?q=install+posgresql) "install postgresql")
+* Mac one-click: [postgresapp.com](http://postgresapp.com/)
 
 ---
 
 ## Tools & Tips
 
-* `psql -d <db_name>` (access db shell) 
-* `\<command>` (similar to Vim's "Leader")
-    - `\?` (show meta-commands)
-    - `\q` or `CTRL+d` (quit)
-    - `\h` (help)
-    - `\r` (bails on any command)
-    - `\d` (shows all tables, sequences, indexes)
-    - `\dt` (shows tables)
-    - `\d <table>` (describes)
-    - `\l` (list databases)
-    - `\c` (connect to different database)
+### Accessing
+
+Create a Postgres user with the same name as your Linux username, and
+access the db shell without having to specify a user to login.
+
+```
+su - postgres
+createuser --interactive
+exit
+psql -d mydb
+```
 
 ---
 
 ## Tools & Tips
 
-* `\x` turns on extended display (akin to MySQL's `\G` query terminator)
+### psql commands
+
+`\<command>`
+
+- `\q` or `CTRL+d` (quit)
+- `\?` (show meta-commands)
+- `\h` (help)
+- `\d` (shows all tables, sequences, indexes)
+- `\d <table>` (describes)
+- `\l` (list databases)
+- `\c` (connect to different database)
+
+---
+
+## Tools & Tips
+
+### Entering queries
+
+* standard query terminators: `;` or `\g`
+
+* `\x` turns on extended display (vertical columns)
+    - akin to MySQL's `\G` query terminator
     - `<sql here> \x\g\x` (turn on, run query, turn off)
-    - put in .psqlrc: `\set G '\\x\\g\\x'` (to use: `<sql here> :G` -- not `\G` but close)
+
 * history file: `~/.psql_history`
-
---- 
-
-# Get help
-
-### [endpoint.com/services/postgresql](https://www.endpoint.com/services/postgresql)
-
-Authors of Bucardo replication
-
-Note: these are the experts, not me
 
 ---
 
 # Thank You
 
-## Slides, notes: https://github.com/jdigory/talk-postgres-for-mysql-users
+Slides, notes: [git.io/voWWG](https://git.io/voWWG)
 
-## Josh Lavin
+Twitter: [jdigory](https://twitter.com/jdigory), IRC: digory
 
-### [twitter.com/jdigory](https://twitter.com/jdigory), IRC: digory
+## Get help
+
+[endpoint.com/services/postgresql](https://www.endpoint.com/services/postgresql)
+
+Note: these are the experts, not me
