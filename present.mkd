@@ -285,10 +285,12 @@ Note: mysqldump is a starting place. Scripts are very useful to massage
 - `\?` (show meta-commands)
 - `\h` (help)
 - `\d` (shows all tables, sequences, indexes)
-- `\d` (show only tables)
+- `\dt` (show only tables)
 - `\d <table>` (describes)
 - `\l` (list databases)
 - `\c` (connect to different database)
+
+Note: "psql" is the interactive terminal.
 
 ---
 
@@ -297,12 +299,31 @@ Note: mysqldump is a starting place. Scripts are very useful to massage
 ### Entering queries
 
 * standard query terminators: `;` or `\g`
-
-* `\x` turns on extended display (vertical columns)
-    - akin to MySQL's `\G` query terminator
+* `\x` for vertical columns (like MySQL's `\G`)
     - `<sql here> \x\g\x` (turn on, run query, turn off)
+```sql
+> SELECT * FROM demo \x\g\x
+Expanded display is on.
+-[ RECORD 1 ]----------------------------------
+id         | 1
+first_name | joshua
+last_name  | lavin
+jdoc       | {"pm": "Bend", "handle": "digory"}
+-[ RECORD 2 ]----------------------------------
+id         | 2
+first_name | larry
+last_name  | wall
+jdoc       | {"pm": "SF", "handle": "timtoady"}
+```
+
+---
+
+## Tools & Tips
+
+### psql terminal
 
 * `CTRL-R` reverse search
+
 * history file: `~/.psql_history`
 
 ---
