@@ -69,6 +69,8 @@ Note: how to pronounce.
 * .com *vs* .org
 * Product *vs* Project
 
+But, support is still available.
+
 Note: Oracle owns MySQL; distrust.
 
 ---
@@ -77,11 +79,22 @@ Note: Oracle owns MySQL; distrust.
 
 ### Awesome documentation
 
-* Versioned
-* Older MySQL docs?
-* MySQL/MariaDB/Percona docs?
+<img src="dist/images/pgdocs.png">
 
-Note: mariadb docs are on .com, and aren't versioned. Mysql docs for older versions redirect (suddenly) to 5.7
+Note: versioned. Shows where the feature was introduced.
+
+---
+
+## Why?
+
+### Awesome documentation
+
+* Older MySQL docs are no more
+* Which MySQL docs to use?
+    * MySQL/MariaDB/Percona
+
+Note: MySQL docs for older versions redirect (suddenly) to 5.7. MariaDB
+      docs are on .com, and aren't versioned.
 
 ---
 
@@ -103,7 +116,7 @@ ROLLBACK;
     * issue `BEGIN;` before making your changes
 
 Note: All changes can be tested (and rolled back) before actually
-      applying. Mysql uses transactions from pluggable table system
+      applying. MySQL uses transactions from pluggable table system
       (InnoDB), not core.
 
 ---
@@ -119,9 +132,8 @@ Note: All changes can be tested (and rolled back) before actually
   * Postgres: *database* does checks (db strict)
 * but, MySQL strict mode
     * but, it can be disabled
-* strictness a disadvantage?
 
-Note: Feb 30 is never a valid date. Mysql strict mode can be turned
+Note: Feb 30 is never a valid date. MySQL strict mode can be turned
       off. Default config in recent versions (it broke our app, so we
       turned it off).
 
@@ -133,11 +145,11 @@ Note: Feb 30 is never a valid date. Mysql strict mode can be turned
 
 `select * from demo where [TAB]`
 
-* postgres shows columns:
-    - `first_name id last_name`
+pg shows columns:
+`first_name id last_name`
 
-* mysql:
-    - `Display all 755 possibilities?`
+mysql:
+`Display all 755 possibilities?`
 
 Note: I tried all the Mysql auto-rehash settings, nada.
 
@@ -147,16 +159,47 @@ Note: I tried all the Mysql auto-rehash settings, nada.
 
 ### Types
 
-* Boolean types - [`boolean`](https://www.postgresql.org/docs/current/static/datatype-boolean.html)
+* [`boolean`](https://www.postgresql.org/docs/current/static/datatype-boolean.html)
     * MySQL is just `TINYINT(1)`, 0=false, !0=true
 
-* JSON data types - [`json`, `jsonb`](https://www.postgresql.org/docs/current/static/datatype-json.html)
-    * can be indexed (WHERE on object keys)
-    * similar functionality in MySQL 5.7
-        * not MariaDB yet
+* [`json`, `jsonb`](https://www.postgresql.org/docs/current/static/datatype-json.html)
 
-Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
-      (latest stable) -- aside: versioning MariaDB vs MySQL...
+```json
+{"pm": "Bend", "handle": "digory"}
+{"pm": "SF", "handle": "timtoady"}
+```
+
+```sql
+SELECT jdoc->'handle' FROM demo;
+ "digory"
+ "timtoady"
+(2 rows)
+```
+
+Note: JSON indexing is in MySQL 5.7, but not in MariaDB latest -- aside:
+      versioning MariaDB vs MySQL...
+
+---
+
+## Why?
+
+### Types
+
+* [Arrays](https://www.postgresql.org/docs/current/static/arrays.html)
+```sql
+CREATE TABLE yapc (
+    venue varchar(64), years integer[]
+);
+INSERT INTO yapc VALUES
+    ( 'Austin', '{2013}' ),
+    ( 'Orlando', '{2014,2016}' )
+;
+SELECT venue FROM yapc WHERE 2014 = ANY (years);
+    Orlando
+SELECT venue, cardinality(years) FROM yapc;
+    Austin     1
+    Orlando    2
+```
 
 ---
 
@@ -164,9 +207,10 @@ Note: JSON indexing doesn't seem to be present in MariaDB 10.1.14
 
 ### Others
 
-* Fulltext w/o MyISAM, MySQL 5.6, or Solr/ElasticSearch
+* [Fulltext](https://www.postgresql.org/docs/current/static/textsearch-intro.html) w/o MyISAM, MySQL 5.6, or Solr/ElasticSearch
 * Partial indexes
-    * `CREATE INDEX ... WHERE ...`
+    * `CREATE INDEX ... WHERE deleted != 1`
+* DBD::Pg & asynchronous queries
 * PL/Perl
 * MySQL gotchas: [sql-info.de/mysql/gotchas.html](http://sql-info.de/mysql/gotchas.html)
 
@@ -233,22 +277,6 @@ Note: mysqldump is a starting place. Scripts are very useful to massage
 
 ## Tools & Tips
 
-### Accessing
-
-Create a Postgres user with the same name as your Linux username, and
-access the db shell without having to specify a user to login.
-
-```
-su - postgres
-createuser --interactive
-exit
-psql -d mydb
-```
-
----
-
-## Tools & Tips
-
 ### psql commands
 
 `\<command>`
@@ -257,6 +285,7 @@ psql -d mydb
 - `\?` (show meta-commands)
 - `\h` (help)
 - `\d` (shows all tables, sequences, indexes)
+- `\d` (show only tables)
 - `\d <table>` (describes)
 - `\l` (list databases)
 - `\c` (connect to different database)
@@ -273,6 +302,7 @@ psql -d mydb
     - akin to MySQL's `\G` query terminator
     - `<sql here> \x\g\x` (turn on, run query, turn off)
 
+* `CTRL-R` reverse search
 * history file: `~/.psql_history`
 
 ---
