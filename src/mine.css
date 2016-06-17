@@ -39,3 +39,6 @@ body {
 .reveal pre {
   width: 50%;
 }
+.reveal li pre {
+  width: auto;
+}
