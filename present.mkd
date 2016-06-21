@@ -4,7 +4,7 @@
 
 Josh Lavin (digory)
 
-[github.com/jdigory/talk-postgres-for-mysql-users](https://github.com/jdigory/talk-postgres-for-mysql-users)
+[jlavin.endpoint.com/talks/postgres-for-mysql-users](https://jlavin.endpoint.com/talks/postgres-for-mysql-users/)
 
 ---
 
