@@ -1,6 +1,10 @@
-## Stranger in a Strange Land:
+## _Stranger in a Strange Land:_
 
-# PostgreSQL for MySQL users
+# PostgreSQL for<br>MySQL users
+
+Josh Lavin (digory)
+
+[github.com/jdigory/talk-postgres-for-mysql-users](https://github.com/jdigory/talk-postgres-for-mysql-users)
 
 ---
 
@@ -27,6 +31,7 @@ Note: know thy history
         * but, legacy tables
 
 * Postgres: ACID-compliant, solid
+    * slower
 
 Note: ACID - Atomicity, Consistency, Isolation, Durability. A =
       transactions (indivisible). MyISAM = storage engine; had to
@@ -87,7 +92,7 @@ Note: versioned. Shows where the feature was introduced.
 
 ## Why?
 
-### Awesome documentation
+### Awesome documentation, 2
 
 * Older MySQL docs are no more
 * Which MySQL docs to use?
@@ -112,12 +117,10 @@ CREATE TABLE ...;
 ROLLBACK;
 ```
 
-* `psql` default is to automatically commit
-    * issue `BEGIN;` before making your changes
-
 Note: All changes can be tested (and rolled back) before actually
       applying. MySQL uses transactions from pluggable table system
-      (InnoDB), not core.
+      (InnoDB), not core. `psql` default is to automatically commit; so
+      issue `BEGIN;` before making your changes
 
 ---
 
@@ -210,7 +213,7 @@ SELECT venue, cardinality(years) FROM yapc;
 * [Fulltext](https://www.postgresql.org/docs/current/static/textsearch-intro.html) w/o MyISAM, MySQL 5.6, or Solr/ElasticSearch
 * Partial indexes
     * `CREATE INDEX ... WHERE deleted != 1`
-* DBD::Pg & asynchronous queries
+* [DBD::Pg](https://metacpan.org/pod/DBD::Pg) & asynchronous queries
 * PL/Perl
 * MySQL gotchas: [sql-info.de/mysql/gotchas.html](http://sql-info.de/mysql/gotchas.html)
 
@@ -270,7 +273,7 @@ Note: mysqldump is a starting place. Scripts are very useful to massage
 
 ### Installing
 
-* easy to find guides ([DDG](https://duckduckgo.com/?q=install+posgresql) "install postgresql")
+* easy to find guides ([search "install postgresql"](https://duckduckgo.com/?q=install+posgresql))
 * Mac one-click: [postgresapp.com](http://postgresapp.com/)
 
 ---
@@ -306,13 +309,13 @@ Note: "psql" is the interactive terminal.
 Expanded display is on.
 -[ RECORD 1 ]----------------------------------
 id         | 1
-first_name | joshua
-last_name  | lavin
+first_name | Joshua
+last_name  | Lavin
 jdoc       | {"pm": "Bend", "handle": "digory"}
 -[ RECORD 2 ]----------------------------------
 id         | 2
-first_name | larry
-last_name  | wall
+first_name | Larry
+last_name  | Wall
 jdoc       | {"pm": "SF", "handle": "timtoady"}
 ```
 
@@ -330,9 +333,7 @@ jdoc       | {"pm": "SF", "handle": "timtoady"}
 
 # Thank You
 
-Slides, notes: [git.io/voWWG](https://git.io/voWWG)
-
-Twitter: [jdigory](https://twitter.com/jdigory), IRC: digory
+Slides, notes:<br>[github.com/jdigory/talk-postgres-for-mysql-users](https://github.com/jdigory/talk-postgres-for-mysql-users)
 
 ## Get help
 
